@@ -1,0 +1,10 @@
+TODO
+- node implementation.
+      - Create game
+            - game ID
+            - set player limit
+            - set time etc like new local game. 
+      - join game
+      - prevent player action when not active turn.
+      - reset board at start of player turn to prevent hacking.
+            - limit to only 1 change per update.

@@ -1,0 +1,272 @@
+body{
+    font-family: calibri, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+$green: #ada;
+$red: #daa;
+$blue: #aad;
+$yellow: #dda;
+
+@mixin colors{
+    &.green {
+        background-color: $green;
+    }
+    &.red {
+        background-color:$red;
+    }
+    &.blue {
+        background-color: $blue; 
+    }
+    &.yellow {
+        background-color: $yellow;
+    }
+}
+
+.gamebox{
+    position: relative;
+    padding: 10px;
+    background-color: #ddd;
+    width: calc(100vw - 20px);
+    height: calc(100vh - 20px);
+}
+
+.gameboard{
+    display: inline-block;
+    width: calc(100vw - 250px);
+    height: calc(100vh - 20px);
+    overflow: auto;
+    vertical-align: top;
+}
+
+.space{
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    vertical-align: top;
+    background-color: #fff;
+
+    @mixin size($size, $fontSize){
+        width: $size;
+        line-height: $size;
+        height: $size;
+        font-size: $fontSize;
+    }
+
+    &.tiny{
+        @include size(15px, 8px);
+    }
+    &.small{
+        @include size(30px, 16px);
+    }
+    &.medium{
+        @include size(50px, 26px);
+    }
+    &.large{
+        @include size(75px, 40px);
+    }
+    &.huge{
+        @include size(100px, 60px);
+    }
+
+
+    @include colors;
+}
+
+
+.row{
+    display: block;
+    height: 30px;
+    white-space: nowrap;
+
+    @mixin size($size){
+        height: $size;
+    }
+
+    &.tiny{
+        @include size(15px);
+    }
+    &.small{
+        @include size(30px);
+    }
+    &.medium{
+        @include size(50px);
+    }
+    &.large{
+        @include size(75px);
+    }
+    &.huge{
+        @include size(100px);
+    }
+
+
+    &:nth-child(2n){
+        .space:nth-child(2n+1){
+            background-color: #eee;
+            @include colors;
+
+        }
+    }
+    &:nth-child(2n+1){
+        .space:nth-child(2n){
+            background-color: #eee;
+            @include colors;
+        }
+    }
+}
+
+.scores {
+    position: absolute;
+    top: 140px;
+    right: 10px;
+    display: inline-block;
+    width: 150px;
+    height: calc(100% - 160px);
+    background-color: #eee;
+    padding: 5px 0 5px 25px;
+    vertical-align: top;
+    margin: 0px;
+    overflow: auto;
+
+    li {
+        padding: 5px 0;
+    }
+
+    .winner {
+        background-color: $green;
+    }
+}
+
+.sizecontrol {
+    background-color: #eee;
+    position: absolute;
+    right: 10px;
+    top: 80px;
+    height: 30px;
+    width: 155px;
+    padding: 10px;
+    select{
+        height: 30px;
+        width: 155px;
+    }
+}
+.countdown {
+    background-color: #eee;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    text-align: center;
+    height: 40px;
+    width: 155px;
+    padding: 10px;
+    transition: background-color .5s;
+
+    &.active {
+        background-color: #9d9;
+    }
+    &.warning {
+        animation: {
+            name: warning;
+            duration: 1s;
+            iteration-count: infinite;
+            timing-function: ease-in-out;
+        }
+        
+    }
+}
+
+@keyframes warning {
+    0% {
+        background-color: #9d9;
+    }
+
+    50% {
+        background-color: #dd9;
+    }
+
+    100% {
+        background-color: #9d9;
+    }
+
+}
+
+.makeNewGame{
+    width: 300px;
+    border: 2px solid #bbb;
+    margin: auto;
+    h1{
+        margin: 0;
+        padding: 0;
+        line-height: 1.5em;
+        text-align: center;
+    }
+
+    &> div {
+        margin: 10px;
+    }
+    label {
+        display: inline-block;
+        width: 100px;
+    }
+    input {
+        width: 160px;
+        padding: 8px;
+        &#addplayer{
+            width: 100px;
+        }
+    }
+
+    select {
+        width: 180px;
+        padding: 8px;
+    }
+    @mixin btnColor($c, $h){
+        border: 1px solid $c;
+        background-color: $c;
+        color: #fff;
+        transition: background-color .4s, border-color .4s;
+        &:hover{
+            border-color: $h;
+            background-color: $h;
+        }
+    }
+    .addplayer{
+        @include btnColor(#999, #666);
+        padding: 8px 0;
+        margin-left: 10px;
+        width: 50px;
+    }
+    .startGame {
+        @include btnColor(#686, #090);
+        padding: 8px 0;
+        width: 280px;
+    }
+    .currentPlayers{
+        border: 2px solid #888;
+        margin: 10px 0;
+        width: 276px;
+        min-height: 33px;
+        position: relative;
+        padding-top: 7px;
+
+        &:after{
+            content: "Players";
+            display: block;
+            position: absolute;
+            top: -10px;
+            left: 3px;
+            background-color: #ddd;
+            padding: 1px 8px 2px;
+            color: #000;
+            font-size: 10pt;
+        }
+        span {
+            margin: 3px; 
+            padding: 3px 7px 4px;
+            background-color: #eee;
+            display: inline-block;
+        }
+    }
+}
